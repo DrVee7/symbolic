@@ -4,6 +4,7 @@ import com.symbolic.symbolic.entity.MedicalPractitioner;
 import com.symbolic.symbolic.entity.Patient;
 import com.symbolic.symbolic.repository.MedicalPractitionerRepository;
 import com.symbolic.symbolic.repository.PatientRepository;
+import com.symbolic.symbolic.service.MedicalPractitionerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class MedicalPractitionerController {
 
     @Autowired
     PatientRepository patientRepository;
+    @Autowired
+    private MedicalPractitionerService medicalPractitionerService;
+
 
     @GetMapping("/practitioners")
     public ResponseEntity<?> getAllPractitioners() {
@@ -115,7 +119,18 @@ public class MedicalPractitionerController {
         List<MedicalPractitioner> practitioners = practitionerRepository.findMedicalPractitionerByPatientsId(patientId);
         return new ResponseEntity<>(practitioners, HttpStatus.OK);
     }
-
+    @GetMapping("/practitioners/search")
+    public ResponseEntity<?> search(
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam(required = false) String specialization,
+            @RequestParam(required = false) Integer consultationCost,
+            @RequestParam(required = false) Integer yearsOfExperience
+    ) {
+        return new ResponseEntity<>(
+                medicalPractitionerService
+                        .search(latitude, longitude, specialization, consultationCost, yearsOfExperience), HttpStatus.OK);
+    }
 //    @PostMapping("/practitioner/patient")
 //    public ResponseEntity<?> addPatientToPractitioner(@RequestParam("id") Long practitionerId, @RequestBody Patient patient) {
 //        Optional<MedicalPractitioner> practitionerData = practitionerRepository.findById(practitionerId);
