@@ -9,9 +9,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "hospitals")
-@AllArgsConstructor
-@RequiredArgsConstructor
+@Table(name = "appointment")
 @Data
 public class Appointment {
     @Id
@@ -19,10 +17,13 @@ public class Appointment {
     private Long id;
     @Column(name = "appointment_id")
     private Long appointmentId;
+
     @Column(name = "schedule")
     private Date schedule;
+
     @Column(name = "cost")
     private BigDecimal cost;
+
     @ManyToMany(
             fetch=FetchType.LAZY,
             cascade = {
@@ -41,5 +42,45 @@ public class Appointment {
         this.appointmentId = appointmentId;
         this.schedule = schedule;
         this.cost = cost;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getAppointmentId() {
+        return appointmentId;
+    }
+
+    public Date getSchedule() {
+        return schedule;
+    }
+
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public Set<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAppointmentId(Long appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public void setSchedule(Date schedule) {
+        this.schedule = schedule;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
+
+    public void setPatients(Set<Patient> patients) {
+        this.patients = patients;
     }
 }

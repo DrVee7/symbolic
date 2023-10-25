@@ -17,10 +17,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class MedicalPractitionerController {
- @Autowired
+    @Autowired
     MedicalPractitionerRepository practitionerRepository;
 
-@Autowired
+    @Autowired
     PatientRepository patientRepository;
     @Autowired
     private MedicalPractitionerService medicalPractitionerService;
@@ -36,6 +36,7 @@ public class MedicalPractitionerController {
 
         return new ResponseEntity<>(practitioners, HttpStatus.OK);
     }
+
     @GetMapping("/practitioner")
     public ResponseEntity<?> getPractitionerById(@RequestParam("id") Long id) {
         Optional<MedicalPractitioner> practitionerData = practitionerRepository.findById(id);
@@ -48,6 +49,7 @@ public class MedicalPractitionerController {
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
+
     @PostMapping("/practitioner")
     public ResponseEntity<?> createPractitioner(@RequestBody MedicalPractitioner practitioner) {
         MedicalPractitioner newPractitioner = new MedicalPractitioner(
@@ -116,6 +118,7 @@ public class MedicalPractitionerController {
         List<MedicalPractitioner> practitioners = practitionerRepository.findMedicalPractitionerByPatientsId(patientId);
         return new ResponseEntity<>(practitioners, HttpStatus.OK);
     }
+
     @GetMapping("/practitioners/search")
     public ResponseEntity<?> search(
             @RequestParam Double latitude,
